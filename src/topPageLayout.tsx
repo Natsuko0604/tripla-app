@@ -1,7 +1,9 @@
 "use client";
-import Link from "next/link";
+import { Button } from "./components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function TopPageLayout() {
+  const router = useRouter();
   return (
     <header className="bg-lime-700 w-full h-20 flex items-center justify-start">
       <h1 className="inline-block bg-white text-lime-700 font-bold text-3xl px-2 py-2 rounded-lg mx-4">
@@ -13,15 +15,18 @@ export default function TopPageLayout() {
           placeholder="投稿を検索"
           className="bg-white text-stone-600  text-l px-2 py-2 rounded-lg mx-4"
         />
-        <Link
-          href="/login"
+        <Button
+          onClick={() => router.push("/login")}
           className="bg-white text-lime-700 font-bold text-l px-2 py-2 rounded-lg mx-4 cursor-pointer hover:bg-stone-200"
         >
           ログイン
-        </Link>
-        <button className="bg-black text-white font-bold text-l px-2 py-2 rounded-lg mx-4 cursor-pointer hover:bg-stone-700">
-          新規登録
-        </button>
+        </Button>
+        <Button
+          onClick={() => router.push("/resister")}
+          className="bg-black font-bold text-l px-2 py-2 rounded-lg mx-4 cursor-pointer hover:bg-stone-700"
+        >
+          <p className="text-white">新規登録</p>
+        </Button>
       </div>
     </header>
   );

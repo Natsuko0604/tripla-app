@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import { useActionState } from "react";
 import { loginAction } from "../actions/login";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,12 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [state, formAction] = useActionState<{
-    success: boolean;
-    error: string;
-  }>(loginAction, {
+  const [state, formAction] = useActionState(loginAction, {
     success: false,
     error: "",
   });
@@ -40,7 +34,7 @@ export default function LoginForm() {
                 <Input
                   id="email"
                   name="email"
-                  type="email"
+                  type="text"
                   className="border-lime-600"
                   required
                 />

@@ -5,7 +5,7 @@ import { z } from "zod";
 import { redirect } from "next/navigation";
 
 const LoginSchema = z.object({
-  email: z.string().email("正しいメールアドレスを入力してください"),
+  email: z.string().email("無効なメールアドレス形式です"),
   password: z.string().min(8, "パスワードは8文字以上で入力してください"),
 });
 
