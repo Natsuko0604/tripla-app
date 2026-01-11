@@ -1,29 +1,36 @@
-import NextAuth from "next-auth"
-import Credentials from "next-auth/providers/credentials"
- 
+import NextAuth from "next-auth";
+import Credentials from "next-auth/providers/credentials";
+import { prisma } from "@/lib/prisma";
+import { verify } from "argon2";
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
-      name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "email" },
+        email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        // ★最低限動く仮ログイン（本来はDBを確認）
-        if (
-          credentials?.email === "test@example.com" &&
-          credentials?.password === "password123"
-        ) {
-          return {
-            id: "1",
-            name: "Test User",
-            email: "test@example.com",
-          }
-        }
+        if (!credentials?.email || !credentials?.password) return null;
 
-        return null
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email as string },
+        });
+
+        if (!user) return null;
+
+        const valid = await verify(
+          user.password,
+          credentials.password as string
+        );
+
+        if (!valid) return null;
+
+        return {
+          id: String(user.id),
+          email: user.email,
+        };
       },
-    })
+    }),
   ],
-})
+});
