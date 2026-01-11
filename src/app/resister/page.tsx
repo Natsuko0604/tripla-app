@@ -33,6 +33,7 @@ export default function ResisterPage() {
                 {state.error && (
                   <p className="text-red-600 text-lg mb-4">{state.error}</p>
                 )}
+                <input type="hidden" name="type" value="register" />
                 <div>
                   <Label htmlFor="email" className="text-lg">
                     メールアドレス

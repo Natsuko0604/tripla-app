@@ -2,7 +2,6 @@ export const runtime = "nodejs";
 
 import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { signIn } from "@/auth";
 import { hash } from "argon2";
 
 export async function POST(req: NextRequest) {
@@ -16,17 +15,5 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  const result = await signIn("credentials", {
-    email: body.email,
-    password: body.password,
-    redirect: false,
-  });
-
-  if (result?.error) {
-    return {
-      success: false,
-      error: "メールアドレスまたはパスワードが正しくありません",
-    };
-  }
   return NextResponse.json(user, { status: 201 });
 }
