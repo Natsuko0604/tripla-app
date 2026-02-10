@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { sightseeingModalCardProps } from "@/types/sightseeingMealsModal";
 
 export async function GET(
-  _request: Request,
-  { params }: { params: { id: string } }
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const selectedId = params.id;
+  const { id: selectedId } = await params;
   const sightseeingMealsModal: sightseeingModalCardProps = {
     id: selectedId,
     imageUrls: [
