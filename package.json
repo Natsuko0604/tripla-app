@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "node scripts/prisma-generate-if-db.mjs && next build",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "prisma generate"
+    "postinstall": "node scripts/prisma-generate-if-db.mjs"
   },
   "prisma": {
     "seed": "ts-node  --compiler-options{\"module\":\"CommonJS\"}prisma/seed.ts"
